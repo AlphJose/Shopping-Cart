@@ -1,11 +1,11 @@
-import asyncio
+# import asyncio
 
 # from sqlalchemy import create_engine
 from sqlalchemy.ext.asyncio import async_scoped_session, AsyncSession, create_async_engine
 
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from asyncio import current_task
+# from asyncio import current_task
 
 SQLALCHEMY_DATABASE_URL = "mysql+aiomysql://root:p4ssw0rd@127.0.0.1:3306/shoppingcartapp"
 engine = create_async_engine(

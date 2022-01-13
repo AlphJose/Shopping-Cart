@@ -9,7 +9,7 @@ from passlib.context import CryptContext
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import SessionLocal, engine, Base
-
+from app.core.db_utils import db_init_models
 router = APIRouter(
     prefix="/user",
     tags=["user"],
@@ -19,24 +19,7 @@ router = APIRouter(
         }
     })
 
-
-async def init_models():
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.drop_all)
-        await conn.run_sync(Base.metadata.create_all)
-
-
-""""
-Dropping and creating tables from Base.metadata doesn't run async by default 
-and there is generally no reason for us to call it within an async function. 
-This is just an example that shows how SQLAlchemy can run otherwise sync operations with run_sync().        
-"""
-
-
-# Base.metadata.create_all(bind=engine)
-def db_init_models():
-    asyncio.run(init_models())
-    print("Done")
+db_init_models()
 
 
 async def get_db():
