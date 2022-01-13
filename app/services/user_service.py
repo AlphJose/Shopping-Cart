@@ -9,7 +9,7 @@ from passlib.context import CryptContext
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import SessionLocal, engine, Base
-from app.core.db_utils import db_init_models
+
 router = APIRouter(
     prefix="/user",
     tags=["user"],
@@ -19,7 +19,8 @@ router = APIRouter(
         }
     })
 
-db_init_models()
+
+# await db_init_models()
 
 
 async def get_db():

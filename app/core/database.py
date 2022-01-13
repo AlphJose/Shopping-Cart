@@ -10,7 +10,7 @@ from sqlalchemy.ext.declarative import declarative_base
 SQLALCHEMY_DATABASE_URL = "mysql+aiomysql://root:p4ssw0rd@127.0.0.1:3306/shoppingcartapp"
 engine = create_async_engine(
     SQLALCHEMY_DATABASE_URL,
-    echo=True
+    echo=False
 )
 
 # SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

@@ -17,6 +17,6 @@ This is just an example that shows how SQLAlchemy can run otherwise sync operati
 
 
 # Base.metadata.create_all(bind=engine)
-def db_init_models():
-    asyncio.run(init_models())
-    print("Done")
+# def db_init_models():
+#     asyncio.run(init_models())
+#     print("Done")
