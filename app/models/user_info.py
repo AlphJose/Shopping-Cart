@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String
-# from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship
 from app.core.database import Base
 
 
@@ -14,4 +14,4 @@ class Users(Base):
     last_name = Column(String(45))
     hashed_password = Column(String(200))
 
-    # carts = relationship("Carts", back_populates="owner")
+    carts = relationship("Carts", back_populates="owner")

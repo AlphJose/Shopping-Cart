@@ -3,8 +3,18 @@ from passlib.context import CryptContext
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.database import SessionLocal
 from app.crud.crud_user import create_user
-from app.models import user_info
 from app.schemas.user_details import CreateUser
+
+from app.models import user_info, cart_info, item_info
+"""
+the cart_info, item_info are imported to avoid the following error:
+
+sqlalchemy.exc.InvalidRequestError: When initializing mapper mapped class Users->users, 
+expression 'Carts' failed to locate a name ('Carts'). 
+If this is a class name, consider adding this relationship() to the <class 'app.models.user_info.Users'> class 
+after both dependent classes have been defined.
+"""
+
 
 router = APIRouter(
     prefix="/user",
