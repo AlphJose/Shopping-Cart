@@ -11,4 +11,3 @@ class Carts(Base):
     is_active = Column(Boolean, default=True)  # becomes False after check-out
 
     owner = relationship("Users", back_populates="carts")
-

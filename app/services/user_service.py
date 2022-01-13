@@ -1,14 +1,10 @@
-import asyncio
-
 from fastapi import APIRouter, Depends
+from passlib.context import CryptContext
+from sqlalchemy.ext.asyncio import AsyncSession
+from app.core.database import SessionLocal
 from app.crud.crud_user import create_user
 from app.models import user_info
 from app.schemas.user_details import CreateUser
-from passlib.context import CryptContext
-# from sqlalchemy.orm import Session
-from sqlalchemy.ext.asyncio import AsyncSession
-
-from app.core.database import SessionLocal, engine, Base
 
 router = APIRouter(
     prefix="/user",
@@ -20,12 +16,8 @@ router = APIRouter(
     })
 
 
-# await db_init_models()
-
-
 async def get_db():
     try:
-        # db = SessionLocal()
         async with SessionLocal() as db:
             yield db
     finally:

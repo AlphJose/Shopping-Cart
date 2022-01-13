@@ -6,6 +6,6 @@ class Items(Base):
     __tablename__ = "items"
 
     id = Column(Integer, primary_key=True, index=True)
-    # to query by itemname
-    itemname = Column(String, unique=True, index=True)
+    # to query by item_name
+    item_name = Column(String, unique=True, index=True)
     price = Column(Float)
