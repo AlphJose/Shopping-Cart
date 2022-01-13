@@ -1,34 +1,14 @@
-# creating table in column struct - how db is going to look like
-
-from sqlalchemy import Boolean, Column, Integer, String, ForeignKey
+from sqlalchemy import Boolean, Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 from app.core.database import Base
 
 
-# create table
-class Users(Base):
-    __tablename__ = "users"
+class Carts(Base):
+    __tablename__ = "carts"
 
     id = Column(Integer, primary_key=True, index=True)
-    email = Column(String, unique=True, index=True)
-    username = Column(String, unique=True, index=True)
-    first_name = Column(String)
-    last_name = Column(String)
-    hashed_password = Column(String)
-    is_active = Column(Boolean, default=True)
-
-    todos = relationship("Todos", back_populates="owner")
-
-
-class Todos(Base):
-    __tablename__ = "todos"
-
-    id = Column(Integer, primary_key=True, index=True)
-    title = Column(String)
-    description = Column(String)
-    priority = Column(Integer)
-    complete = Column(Boolean, default=False)
     owner_id = Column(Integer, ForeignKey("users.id"))
+    is_active = Column(Boolean, default=True)  # becomes False after check-out
 
-    owner = relationship("Users", back_populates="todos")
+    owner = relationship("Users", back_populates="carts")
 
