@@ -2,6 +2,8 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 from app.core.database import Base
 
+print("inside user_info")
+
 
 class Users(Base):
     __tablename__ = "users"
@@ -15,3 +17,6 @@ class Users(Base):
     hashed_password = Column(String(200))
 
     carts = relationship("Carts", back_populates="owner")
+
+
+print("done with user_info")
