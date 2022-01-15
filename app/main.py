@@ -29,8 +29,8 @@ app.include_router(user_service.router)
 
 
 @app.get("/")
-async def test():
-    return {"response": "Successful test"}
+async def welcome():
+    return {"response": "Please navigate to /docs"}
 
 #
 # if __name__ == "__main__":
