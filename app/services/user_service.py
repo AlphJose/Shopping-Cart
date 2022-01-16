@@ -53,12 +53,13 @@ def get_hashed_password(password):
 # register
 @router.post("/")
 async def create_new_user(user_data: CreateUser, db: AsyncSession = Depends(get_db)):
-    create_new_user_model = user_info.Users()
-    create_new_user_model.username = user_data.username
-    create_new_user_model.email = user_data.email
-    create_new_user_model.first_name = user_data.first_name
-    create_new_user_model.last_name = user_data.last_name
-    create_new_user_model.hashed_password = get_hashed_password(user_data.password)
+    create_new_user_model = user_info.Users(
+        username=user_data.username,
+        email=user_data.email,
+        first_name=user_data.first_name,
+        last_name=user_data.last_name,
+        hashed_password=get_hashed_password(user_data.password)
+    )
 
     await create_user(create_new_user_model, db)
 
