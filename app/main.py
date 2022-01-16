@@ -3,7 +3,7 @@ import typer
 from fastapi import FastAPI
 # from app.models import user_info, item_info, cart_info
 from app.core.db_utils import init_models
-from app.services import user_service
+from app.services import user_service, item_service
 
 app = FastAPI()
 
@@ -26,6 +26,7 @@ async def on_startup():
 #     cli()
 
 app.include_router(user_service.router)
+app.include_router(item_service.router)
 
 
 @app.get("/")
