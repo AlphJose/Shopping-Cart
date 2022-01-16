@@ -2,8 +2,9 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from passlib.context import CryptContext
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.core.database import SessionLocal
-from app.crud.crud_user import create_user
+# from app.core.database import SessionLocal
+from app.core.db_utils import get_db
+from app.crud.crud_user import create_user, get_user
 from app.schemas.user_details import CreateUser
 from datetime import timedelta, datetime
 from typing import Optional
@@ -34,12 +35,12 @@ router = APIRouter(
     })
 
 
-async def get_db():
-    try:
-        async with SessionLocal() as db:
-            yield db
-    finally:
-        await db.close()
+# async def get_db():
+#     try:
+#         async with SessionLocal() as db:
+#             yield db
+#     finally:
+#         await db.close()
 
 
 bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -78,10 +79,10 @@ def verify_password(plain_password, hashed_password):
 
 async def authenticate_user(username: str, password: str, db):
     # user = db.query(user_info.Users).filter(user_info.Users.username == username).first()
-    query = select(user_info.Users).where(user_info.Users.username == username)
-    result = await db.execute(query)
-    user = result.scalars().first()
-    # user = db.execute(query).scalars().first()
+    # query = select(user_info.Users).where(user_info.Users.username == username)
+    # result = await db.execute(query)
+    # user = result.scalars().first()
+    user = get_user(username, db)
     if not user:
         return False
     if not verify_password(password, user.hashed_password):
