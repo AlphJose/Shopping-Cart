@@ -10,6 +10,7 @@ from datetime import timedelta, datetime
 from typing import Optional
 from jose import jwt
 from sqlalchemy import select
+from app.api.responses import success_response
 
 from app.models import user_info, cart_info, item_info
 
@@ -34,7 +35,6 @@ router = APIRouter(
         }
     })
 
-
 # async def get_db():
 #     try:
 #         async with SessionLocal() as db:
@@ -50,15 +50,8 @@ def get_hashed_password(password):
     return bcrypt_context.hash(password)
 
 
-def success_response(status_code: int):
-    return {
-        "status": status_code,
-        "transaction": "Successful"
-    }
-
-
 # register
-@router.post("/create")
+@router.post("/")
 async def create_new_user(user_data: CreateUser, db: AsyncSession = Depends(get_db)):
     create_new_user_model = user_info.Users()
     create_new_user_model.username = user_data.username
