@@ -1,3 +1,4 @@
+import pytest
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 from app.core.database import Base
@@ -23,18 +24,22 @@ TestingSessionLocal = sessionmaker(engine, class_=AsyncSession, expire_on_commit
 
 
 # Base.metadata.create_all(bind=test_engine)
+# @pytest.fixture
 async def init_models():
     async with engine.begin() as conn:
+        print("test_db init_models called")
         await conn.run_sync(Base.metadata.drop_all)
         await conn.run_sync(Base.metadata.create_all)
 
 
-def override_get_db():
+@pytest.fixture
+async def override_get_db():
+    await init_models()
     try:
-        db = TestingSessionLocal()
-        yield db
+        async with TestingSessionLocal() as db:
+            yield db
     finally:
-        db.close()
+        await db.close()
 
 
 app.dependency_overrides[get_db] = override_get_db

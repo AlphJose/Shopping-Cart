@@ -29,7 +29,6 @@ app.include_router(user_service.router)
 app.include_router(item_service.router)
 app.include_router(cart_service.router)
 
-
 # @app.get("/")
 # async def welcome():
 #     return {"response": "Please navigate to /docs"}
@@ -37,4 +36,3 @@ app.include_router(cart_service.router)
 #
 # if __name__ == "__main__":
 #     cli()
-
