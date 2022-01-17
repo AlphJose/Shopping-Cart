@@ -6,7 +6,7 @@ SQLALCHEMY_DATABASE_URL = "mysql+aiomysql://root:p4ssw0rd@127.0.0.1:3306/shoppin
 
 engine = create_async_engine(
     SQLALCHEMY_DATABASE_URL,
-    echo=False
+    echo=True
 )
 
 Base = declarative_base()

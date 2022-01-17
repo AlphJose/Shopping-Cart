@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordRequestForm
+from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from passlib.context import CryptContext
 from sqlalchemy.ext.asyncio import AsyncSession
 # from app.core.database import SessionLocal
@@ -8,7 +8,7 @@ from app.crud.crud_user import create_user, get_user
 from app.schemas.user_details import CreateUser
 from datetime import timedelta, datetime
 from typing import Optional
-from jose import jwt
+from jose import jwt, JWTError
 from sqlalchemy import select
 from app.api.responses import success_response
 
@@ -45,6 +45,9 @@ router = APIRouter(
 
 bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
+# dependency which is going to extract any data from authorization header
+oauth2_bearer = OAuth2PasswordBearer(tokenUrl="token")
+
 
 def get_hashed_password(password):
     return bcrypt_context.hash(password)
@@ -76,7 +79,7 @@ async def authenticate_user(username: str, password: str, db):
     # query = select(user_info.Users).where(user_info.Users.username == username)
     # result = await db.execute(query)
     # user = result.scalars().first()
-    user = get_user(username, db)
+    user = await get_user(username, db)
     if not user:
         return False
     if not verify_password(password, user.hashed_password):
@@ -108,6 +111,21 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     }
 
 
+async def get_current_user(token: str = Depends(oauth2_bearer)):
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username: str = payload.get("sub")
+        user_id: int = payload.get("id")
+        if user_id is None or username is None:
+            raise get_user_exception()
+        return {
+            "username": username,
+            "id": user_id
+        }
+    except JWTError:
+        raise get_user_exception()
+
+
 # Exceptions
 def token_exception():
     token_exception_response = HTTPException(
@@ -116,3 +134,12 @@ def token_exception():
         headers={"WWW-Authenticate": "Bearer"}
     )
     return token_exception_response
+
+
+def get_user_exception():
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"}
+    )
+    return credentials_exception
