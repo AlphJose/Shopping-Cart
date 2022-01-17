@@ -10,7 +10,7 @@ from datetime import timedelta, datetime
 from typing import Optional
 from jose import jwt, JWTError
 from sqlalchemy import select
-from app.api.responses import success_response
+from app.api.responses import success_response, token_exception, get_user_exception
 
 from app.models import user_info, cart_info, item_info
 
@@ -126,20 +126,4 @@ async def get_current_user(token: str = Depends(oauth2_bearer)):
         raise get_user_exception()
 
 
-# Exceptions
-def token_exception():
-    token_exception_response = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Incorrect username or password",
-        headers={"WWW-Authenticate": "Bearer"}
-    )
-    return token_exception_response
 
-
-def get_user_exception():
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"}
-    )
-    return credentials_exception
