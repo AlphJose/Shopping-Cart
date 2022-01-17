@@ -5,6 +5,13 @@ from httpx import AsyncClient
 #
 # sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from app.main import app
+import app.tests.test_database
+from app.tests.test_database import init_models
+
+
+# @app.on_event("startup")
+# async def on_startup():
+#     await init_models()
 
 
 @pytest.mark.anyio

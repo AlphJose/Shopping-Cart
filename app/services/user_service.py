@@ -96,8 +96,8 @@ async def create_new_user(user_data: CreateUser, db: AsyncSession = Depends(get_
 
     await create_user(create_new_user_model, db)
 
-    # return success_response(201)
-    return user_data
+    return success_response(201)
+    # return user_data
 
 
 # login
