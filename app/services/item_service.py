@@ -21,7 +21,6 @@ router = APIRouter(
 # get list of items for user
 @router.get("/")
 async def get_items_list(db: AsyncSession = Depends(get_db)):
-    items_list = {}
     items_list = await get_items(db)
     return items_list
 
