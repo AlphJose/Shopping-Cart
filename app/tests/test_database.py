@@ -32,7 +32,7 @@ async def init_models():
         await conn.run_sync(Base.metadata.create_all)
 
 
-@pytest.fixture
+# @pytest.fixture
 async def override_get_db():
     await init_models()
     try:

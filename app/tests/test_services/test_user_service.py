@@ -14,7 +14,7 @@ from app.tests.test_database import init_models
 #     await init_models()
 
 
-@pytest.mark.anyio
+@pytest.mark.asyncio
 async def test_create_new_user():
     print("test_create_new_user called")
     json = {
