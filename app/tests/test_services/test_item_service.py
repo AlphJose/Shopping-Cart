@@ -11,16 +11,13 @@ from app.tests.conftest import init_models
 async def test_create_new_item():
     json = {
         "item_name": "test_item",
-        "price": "100"
+        "price": 100
     }
     async with AsyncClient(app=app, base_url="http://localhost:8000") as ac:
         response = await ac.post("/item/", json=json)
     print(response.url)
     assert response.status_code == 200
-    assert response.json() == {
-        "status": 201,
-        "transaction": "Successful"
-    }
+    assert response.json() == json
 
 
 # @pytest.mark.asyncio

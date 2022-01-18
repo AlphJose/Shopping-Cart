@@ -19,10 +19,8 @@ async def test_create_new_user():
         response = await client.post("/user/", json=json)
     print(response.url)
     assert response.status_code == 200
-    assert response.json() == {
-        "status": 201,
-        "transaction": "Successful"
-    }
+    assert response.json() == json
+
 
 @pytest.mark.asyncio
 async def test_login_for_access_token():
