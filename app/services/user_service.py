@@ -4,7 +4,7 @@ from passlib.context import CryptContext
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.db_utils import get_db
 from app.crud.crud_user import create_user, get_user, get_user_by_username_or_email
-from app.schemas.user_details import CreateUser
+from app.schemas.user_details import CreateUser, LoginUser
 from datetime import timedelta, datetime
 from typing import Optional
 from jose import jwt, JWTError
@@ -107,8 +107,8 @@ async def create_new_user(user_data: CreateUser, db: AsyncSession = Depends(get_
 
 # login
 @router.post("/token")
-async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: AsyncSession = Depends(get_db)):
-    user = await authenticate_user(form_data.username, form_data.password, db)
+async def login_for_access_token(login_user_data: LoginUser, db: AsyncSession = Depends(get_db)):
+    user = await authenticate_user(login_user_data.username, login_user_data.password, db)
     if not user:
         raise token_exception()
     token_expires = timedelta(minutes=20)
