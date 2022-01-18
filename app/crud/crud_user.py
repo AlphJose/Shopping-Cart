@@ -22,3 +22,10 @@ async def get_user_by_username_or_email(user_model, db):
     result = await db.execute(query)
     user = result.scalars().first()
     return user
+
+
+async def get_all_users(db):
+    query = select(user_info.Users)
+    result = await db.execute(query)
+    curr = result.fetchall()
+    print(curr)

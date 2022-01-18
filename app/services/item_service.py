@@ -1,8 +1,9 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.responses import success_response, item_exists_exception, get_user_exception, admin_access_exception
+from app.api.responses import item_exists_exception, get_user_exception, admin_access_exception
 from app.core.db_utils import get_db
+from app.crud.crud_user import get_all_users
 from app.models import item_info
 from app.crud.crud_item import get_items, create_item, get_item_by_item_name
 from app.schemas.item_details import CreateItem
@@ -20,10 +21,12 @@ router = APIRouter(
 
 
 # create item for admin
-@router.post("/")
+@router.post("/", status_code=status.HTTP_201_CREATED)
 async def create_new_item(item_data: CreateItem,
                           user: dict = Depends(get_current_user),
                           db: AsyncSession = Depends(get_db)):
+    print(user)
+    await get_all_users(db)
     if user is None:
         raise get_user_exception()
     if user.get("username") != "admin":
@@ -40,7 +43,6 @@ async def create_new_item(item_data: CreateItem,
 
         await create_item(create_new_item_model, db)
 
-        # return success_response(201)
         return item_data
 
 
