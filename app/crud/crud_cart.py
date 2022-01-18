@@ -6,14 +6,9 @@ from app.models import cart_info, item_info
 
 # item details of items associated with current user
 async def show_cart_items(db, owner_id):
-    # query = select(cart_info.Carts, item_info.Items)\
-    #     .join(item_info.Items, cart_info.Carts.item_id == item_info.Items.id)\
-    #     .where(cart_info.Carts.owner_id == owner_id)
-    # query = select(cart_info.Carts.item_id, item_info.Items.item_name, item_info.Items.price) \
-    #     .where(cart_info.Carts.item_id == item_info.Items.id and cart_info.Carts.owner_id == owner_id)
-    query = "select items.id as item_id, items.item_name, items.price as unit_price, count(*) as count," \
+    query = f"select items.id as item_id, items.item_name, items.price as unit_price, count(*) as count," \
             " sum(items.price) as total_price_for_item from items " \
-            "inner join carts on (items.id = carts.item_id and carts.owner_id = 1)" \
+            f"inner join carts on (items.id = carts.item_id and carts.owner_id = {owner_id})" \
             " group by carts.item_id"
     result = await db.execute(query)
     rows = result.fetchall()
