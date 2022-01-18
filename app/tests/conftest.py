@@ -50,14 +50,14 @@ app.dependency_overrides[get_db] = override_get_db
 print("get_db override done")
 
 
-@pytest.fixture(scope="function")
-async def create_and_get_items(db) -> List[str]:
-    create_new_item_model = item_info.Items()
-    create_new_item_model.item_name = "test_item"
-    create_new_item_model.price = 100
-
-    db.add(create_new_item_model)
-    await db.commit()
-    # await create_item(create_new_item_model, db)
-    yield create_new_item_model
-    # await db.rollback()
+# @pytest.fixture(scope="function")
+# async def create_and_get_items(db) -> List[str]:
+#     create_new_item_model = item_info.Items()
+#     create_new_item_model.item_name = "test_item"
+#     create_new_item_model.price = 100
+#
+#     db.add(create_new_item_model)
+#     await db.commit()
+#     # await create_item(create_new_item_model, db)
+#     yield create_new_item_model
+#     # await db.rollback()
