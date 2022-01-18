@@ -20,5 +20,12 @@ async def create_item(create_new_item_model, db):
 async def get_item_by_item_name(item_name: str, db):
     query = select(item_info.Items).where(item_info.Items.item_name == item_name)
     result = await db.execute(query)
-    user = result.scalars().first()
-    return user
+    item = result.scalars().first()
+    return item
+
+
+async def get_item_by_item_id(item_id: int, db):
+    query = select(item_info.Items).where(item_info.Items.id == item_id)
+    result = await db.execute(query)
+    item = result.scalars().first()
+    return item

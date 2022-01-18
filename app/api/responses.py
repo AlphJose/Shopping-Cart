@@ -38,3 +38,7 @@ def user_exists_exception():
 
 def item_exists_exception():
     return HTTPException(status_code=409, detail="Item with the given item name exists.")
+
+
+def admin_access_exception():
+    return HTTPException(status_code=401, detail="Admin access is required to create an item.")

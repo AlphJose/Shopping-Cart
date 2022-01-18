@@ -9,8 +9,12 @@ async def show_cart_items(db, owner_id):
     # query = select(cart_info.Carts, item_info.Items)\
     #     .join(item_info.Items, cart_info.Carts.item_id == item_info.Items.id)\
     #     .where(cart_info.Carts.owner_id == owner_id)
-    query = select(cart_info.Carts.item_id, item_info.Items.item_name, item_info.Items.price) \
-        .where(cart_info.Carts.item_id == item_info.Items.id and cart_info.Carts.owner_id == owner_id)
+    # query = select(cart_info.Carts.item_id, item_info.Items.item_name, item_info.Items.price) \
+    #     .where(cart_info.Carts.item_id == item_info.Items.id and cart_info.Carts.owner_id == owner_id)
+    query = "select items.id as item_id, items.item_name, items.price as unit_price, count(*) as count," \
+            " sum(items.price) as total_price_for_item from items " \
+            "inner join carts on (items.id = carts.item_id and carts.owner_id = 1)" \
+            " group by carts.item_id"
     result = await db.execute(query)
     rows = result.fetchall()
     # for cart_item in rows:
@@ -23,8 +27,8 @@ async def create_cart(create_new_cart_model, db):
     await db.commit()
 
 
-async def remove_cart(cart_id, db):
-    query = select(cart_info.Carts).where(cart_info.Carts.id == cart_id)
+async def remove_cart_item(item_id, db):
+    query = select(cart_info.Carts).where(cart_info.Carts.item_id == item_id)
 
     result = await db.execute(query)
     cart_model = result.scalars().first()
