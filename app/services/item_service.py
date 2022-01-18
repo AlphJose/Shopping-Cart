@@ -18,16 +18,10 @@ router = APIRouter(
 )
 
 
-# get list of items for user
-@router.get("/")
-async def get_items_list(db: AsyncSession = Depends(get_db)):
-    items_list = await get_items(db)
-    return items_list
-
-
 # create item for admin
 @router.post("/")
 async def create_new_item(item_data: CreateItem, db: AsyncSession = Depends(get_db)):
+    print("create new item called")
     create_new_item_model = item_info.Items()
     create_new_item_model.item_name = item_data.item_name
     create_new_item_model.price = item_data.price
@@ -35,3 +29,10 @@ async def create_new_item(item_data: CreateItem, db: AsyncSession = Depends(get_
     await create_item(create_new_item_model, db)
 
     return success_response(201)
+
+
+# get list of items for user
+@router.get("/")
+async def get_items_list(db: AsyncSession = Depends(get_db)):
+    items_list = await get_items(db)
+    return items_list
