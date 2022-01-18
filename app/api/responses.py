@@ -30,3 +30,11 @@ def get_user_exception():
 
 def http_exception():
     return HTTPException(status_code=404, detail="Not found")
+
+
+def user_exists_exception():
+    return HTTPException(status_code=409, detail="User with the given username or email exists.")
+
+
+def item_exists_exception():
+    return HTTPException(status_code=409, detail="Item with the given item name exists.")

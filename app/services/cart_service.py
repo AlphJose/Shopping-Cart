@@ -19,17 +19,6 @@ router = APIRouter(
 )
 
 
-# get list of items in a cart
-@router.get("/")
-async def show_cart(user: dict = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
-    if user is None:
-        print("no current user")
-    else:
-        owner_id = user.get("id")
-        cart = await show_cart_items(db, owner_id=owner_id)
-        return cart
-
-
 @router.post("/")
 async def create_new_cart(cart_data: CreateCart, user: dict = Depends(get_current_user),
                           db: AsyncSession = Depends(get_db)):
@@ -41,11 +30,23 @@ async def create_new_cart(cart_data: CreateCart, user: dict = Depends(get_curren
 
     await create_cart(create_new_cart_model, db)
 
-    return success_response(201)
+    # return success_response(201)
+    return cart_data
+
+
+# get list of items in a cart
+@router.get("/")
+async def show_user_cart(user: dict = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
+    if user is None:
+        raise get_user_exception()
+    else:
+        owner_id = user.get("id")
+        cart = await show_cart_items(db, owner_id=owner_id)
+        return cart
 
 
 @router.delete("/{cart_id}")
-async def delete_todo(cart_id: int,
+async def delete_cart(cart_id: int,
                       user: dict = Depends(get_current_user),
                       db: AsyncSession = Depends(get_db)):
     if user is None:
@@ -57,11 +58,10 @@ async def delete_todo(cart_id: int,
 
 
 @router.post("/checkout/")
-async def checkout_cart(user: dict = Depends(get_current_user),
-                        db: AsyncSession = Depends(get_db)):
+async def checkout_user_carts(user: dict = Depends(get_current_user),
+                              db: AsyncSession = Depends(get_db)):
     if user is None:
         raise get_user_exception()
     owner_id = user.get("id")
     await remove_cart_of_owner(owner_id=owner_id, db=db)
     return success_response(200)
-

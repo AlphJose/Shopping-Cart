@@ -3,12 +3,12 @@ from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from passlib.context import CryptContext
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.db_utils import get_db
-from app.crud.crud_user import create_user, get_user
+from app.crud.crud_user import create_user, get_user, get_user_by_username_or_email
 from app.schemas.user_details import CreateUser
 from datetime import timedelta, datetime
 from typing import Optional
 from jose import jwt, JWTError
-from app.api.responses import success_response, token_exception, get_user_exception
+from app.api.responses import success_response, token_exception, get_user_exception, user_exists_exception
 
 from app.models import user_info, cart_info, item_info
 
@@ -94,10 +94,15 @@ async def create_new_user(user_data: CreateUser, db: AsyncSession = Depends(get_
         hashed_password=get_hashed_password(user_data.password)
     )
 
+    existing_user = await get_user_by_username_or_email(create_new_user_model, db)
+
+    if existing_user is not None:
+        raise user_exists_exception()
+
     await create_user(create_new_user_model, db)
 
-    return success_response(201)
-    # return user_data
+    # return success_response(201)
+    return user_data
 
 
 # login
