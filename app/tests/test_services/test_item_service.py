@@ -13,6 +13,7 @@ async def test_create_new_item():
         "item_name": "test_item",
         "price": 100
     }
+    # TODO: authorized as admin required
     async with AsyncClient(app=app, base_url="http://localhost:8000") as ac:
         response = await ac.post("/item/", json=json)
     print(response.url)

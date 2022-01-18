@@ -19,6 +19,7 @@ async def test_create_new_cart():
     json = {
         "item_id": 1
     }
+    # TODO: have to insert item with id 1 before calling this
     async with AsyncClient(app=app, base_url="http://localhost:8000") as ac:
         response = await ac.post("/cart/", json=json)
     print(response.url)
