@@ -15,15 +15,6 @@ From project root directory run:
 dotenv run uvicorn app.main:app
 ```
 
-[//]: # (The route is configured to `/` of the server)
-
-[//]: # ()
-[//]: # (```sh)
-
-[//]: # (curl http://localhost:{APP_PORT})
-
-[//]: # (```)
-
 The default value for `APP_PORT` is 8000.
 It can be overridden by passing port number like this:
 
@@ -31,6 +22,7 @@ It can be overridden by passing port number like this:
 dotenv run uvicorn app.main:app --port 9000
 ```
 ###APIs
+
 Available at ShoppingCart.postman_collection.json. Also available at http://localhost:{port}/docs .
 
 
