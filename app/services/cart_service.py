@@ -35,7 +35,7 @@ async def create_new_cart(cart_data: CreateCart, user: dict = Depends(get_curren
         # checking whether the item id given exists
         item = await get_item_by_item_id(cart_data.item_id, db)
         if item is None:
-            print("item is null")
+            # print("item is null")
             raise http_exception()
         else:
             await create_cart(create_new_cart_model, db)

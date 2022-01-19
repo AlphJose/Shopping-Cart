@@ -11,7 +11,7 @@ async def get_items(db):
 
 
 async def create_item(create_new_item_model, db):
-    print(db)
+    # print(db)
     db.add(create_new_item_model)
     await db.commit()
 

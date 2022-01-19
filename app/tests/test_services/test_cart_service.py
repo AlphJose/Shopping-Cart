@@ -41,7 +41,7 @@ async def test_create_new_cart(client: AsyncClient, get_token_for_test):
 
     async with AsyncClient(app=app, base_url="http://localhost:8000", headers=headers) as client:
         response = await client.post("/cartItem/", json=json)
-    print(response.url)
+    # print(response.url)
     assert response.status_code == 200
     assert response.json() == json
 
@@ -56,7 +56,7 @@ async def test_show_user_cart(client: AsyncClient, get_token_for_test):
 
     async with AsyncClient(app=app, base_url="http://localhost:8000", headers=headers) as client:
         response = await client.get("/cartItem/")
-    print(response.url)
+    # print(response.url)
     assert response.status_code == 200
     json = {
         "item_id": 1,
@@ -78,7 +78,7 @@ async def test_remove_cart_item_for_user(client: AsyncClient, get_token_for_test
 
     async with AsyncClient(app=app, base_url="http://localhost:8000", headers=headers) as client:
         response = await client.post("/cartItem/1")
-    print(response.url)
+    # print(response.url)
     assert response.status_code == 200
 
 
@@ -92,5 +92,5 @@ async def test_checkout_user_carts(client: AsyncClient, get_token_for_test):
 
     async with AsyncClient(app=app, base_url="http://localhost:8000", headers=headers) as client:
         response = await client.post("/cartItem/checkout/")
-    print(response.url)
+    # print(response.url)
     assert response.status_code == 200

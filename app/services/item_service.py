@@ -25,7 +25,7 @@ router = APIRouter(
 async def create_new_item(item_data: CreateItem,
                           user: dict = Depends(get_current_user),
                           db: AsyncSession = Depends(get_db)):
-    print(user)
+    # print(user)
     # await get_all_users(db)
     if user is None:
         raise get_user_exception()

@@ -7,11 +7,11 @@ import os
 
 SQLALCHEMY_DATABASE_URL = os.getenv("DB_URL")
 
-print("loaded env", SQLALCHEMY_DATABASE_URL)
+# print("loaded env", SQLALCHEMY_DATABASE_URL)
 
 engine = create_async_engine(
     SQLALCHEMY_DATABASE_URL,
-    echo=True
+    echo=False
 )
 
 Base = declarative_base()
@@ -47,6 +47,6 @@ async def get_db_session() -> AsyncSession:
 
 async def get_db_engine():
     sqlite_client_str = "sqlite+aiosqlite:///./shoppingcartapp"
-    print(sqlite_client_str)
+    # print(sqlite_client_str)
     test_db_engine = create_async_engine(sqlite_client_str, echo=True)
     return test_db_engine
