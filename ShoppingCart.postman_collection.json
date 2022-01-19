@@ -1,12 +1,11 @@
 {
 	"info": {
-		"_postman_id": "0006af6a-db2d-40cd-9ba8-50ea633102d8",
 		"name": "ShoppingCart",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "create user",
+			"name": "Create a new user",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -34,7 +33,7 @@
 			"response": []
 		},
 		{
-			"name": "user login - get token",
+			"name": "Login user to get token",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -66,7 +65,7 @@
 			"response": []
 		},
 		{
-			"name": "get all items",
+			"name": "Get all items from master list",
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -92,7 +91,7 @@
 			"response": []
 		},
 		{
-			"name": "create item",
+			"name": "Create a new item - admin access required",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -130,7 +129,7 @@
 			"response": []
 		},
 		{
-			"name": "get cart items",
+			"name": "Get cart items for user - user token required",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -158,7 +157,7 @@
 			"response": []
 		},
 		{
-			"name": "add cart-item",
+			"name": "Add cart items for user - user token required",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -195,7 +194,7 @@
 			"response": []
 		},
 		{
-			"name": "delete cart-item",
+			"name": "Delete cart items for user - user token required",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -224,7 +223,7 @@
 			"response": []
 		},
 		{
-			"name": "checkout cart",
+			"name": "Checkout cart for user - user token required",
 			"request": {
 				"auth": {
 					"type": "bearer",
