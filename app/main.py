@@ -5,6 +5,8 @@ from fastapi import FastAPI
 from app.core.db_utils import init_models
 from app.services import user_service, item_service, cart_service
 
+
+
 app = FastAPI()
 
 cli = typer.Typer()

@@ -26,7 +26,7 @@ async def create_new_item(item_data: CreateItem,
                           user: dict = Depends(get_current_user),
                           db: AsyncSession = Depends(get_db)):
     print(user)
-    await get_all_users(db)
+    # await get_all_users(db)
     if user is None:
         raise get_user_exception()
     if user.get("username") != "admin":
@@ -49,5 +49,8 @@ async def create_new_item(item_data: CreateItem,
 # get list of items for user
 @router.get("/")
 async def get_items_list(db: AsyncSession = Depends(get_db)):
+    print("entered get_items_list")
     items_list = await get_items(db)
+    print("done: get_items_list")
+
     return items_list

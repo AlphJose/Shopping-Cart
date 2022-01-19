@@ -70,7 +70,7 @@ def create_access_token(username: str, user_id: int,
 
 async def get_current_user(token: str = Depends(oauth2_bearer)):
     try:
-        # print(f'token is {token}')
+        print(f'token is {token}')
         # if token is None:
         #     raise get_user_exception()
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])

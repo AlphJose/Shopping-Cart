@@ -3,9 +3,12 @@ from app.models import item_info
 
 
 async def get_items(db):
+    print("entered get_items")
     query = select(item_info.Items)
     result = await db.execute(query)
     curr = result.fetchall()
+    print("done: get_items")
+
     # TODO: put a cap on number of rows returned. for eg: return first 25 records
     return curr
 
