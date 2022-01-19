@@ -23,7 +23,7 @@ dotenv run uvicorn app.main:app --port 9000
 ```
 ### APIs
 
-Available at ShoppingCart.postman_collection.json. Also available at http://localhost:{port}/docs .
+Available at [ShoppingCart.postman_collection.json](https://github.com/AlphJose/Shopping-Cart/blob/main/ShoppingCart.postman_collection.json). Also available at http://localhost:{port}/docs .
 
 
 ## How to Test
