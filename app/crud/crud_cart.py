@@ -12,8 +12,6 @@ async def show_cart_items(db, owner_id):
             " group by carts.item_id"
     result = await db.execute(query)
     rows = result.fetchall()
-    # for cart_item in rows:
-    #     item_ids.append(cart_item)
     return rows
 
 
@@ -33,8 +31,6 @@ async def remove_cart_item(item_id, db):
 
     await db.delete(cart_model)
 
-    # query = delete(cart_info.Carts).where(cart_info.Carts.id == cart_id)
-    # await db.execute(query)
     await db.commit()
 
 

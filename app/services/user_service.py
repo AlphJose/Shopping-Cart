@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, status
-from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
+from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.db_utils import get_db
@@ -8,7 +8,7 @@ from app.schemas.user_details import CreateUser, LoginUser
 from datetime import timedelta, datetime
 from typing import Optional
 from jose import jwt, JWTError
-from app.api.responses import success_response, token_exception, get_user_exception, user_exists_exception
+from app.api.responses import token_exception, get_user_exception, user_exists_exception
 
 from app.models import user_info, cart_info, item_info
 
@@ -70,9 +70,6 @@ def create_access_token(username: str, user_id: int,
 
 async def get_current_user(token: str = Depends(oauth2_bearer)):
     try:
-        print(f'token is {token}')
-        # if token is None:
-        #     raise get_user_exception()
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username: str = payload.get("sub")
         user_id: int = payload.get("id")

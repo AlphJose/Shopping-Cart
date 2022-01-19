@@ -34,8 +34,7 @@ async def test_create_new_cart(client: AsyncClient, get_token_for_test):
     json = {
         "item_id": 1
     }
-    # TODO: have to insert item with id 1 before calling this
-    # async with AsyncClient(app=app, base_url="http://localhost:8000") as client:
+
     headers = {
         'Authorization': 'Bearer {}'.format(get_token_for_test),
     }
@@ -51,11 +50,6 @@ async def test_create_new_cart(client: AsyncClient, get_token_for_test):
 async def test_show_user_cart(client: AsyncClient, get_token_for_test):
     await setup_db_with_info_cart()
 
-    json = {
-        "item_id": 1
-    }
-    # TODO: have to insert item with id 1 before calling this
-    # async with AsyncClient(app=app, base_url="http://localhost:8000") as client:
     headers = {
         'Authorization': 'Bearer {}'.format(get_token_for_test),
     }
@@ -78,8 +72,6 @@ async def test_show_user_cart(client: AsyncClient, get_token_for_test):
 async def test_remove_cart_item_for_user(client: AsyncClient, get_token_for_test):
     await setup_db_with_info_cart()
 
-    # TODO: have to insert item with id 1 before calling this
-    # async with AsyncClient(app=app, base_url="http://localhost:8000") as client:
     headers = {
         'Authorization': 'Bearer {}'.format(get_token_for_test),
     }
@@ -94,8 +86,6 @@ async def test_remove_cart_item_for_user(client: AsyncClient, get_token_for_test
 async def test_checkout_user_carts(client: AsyncClient, get_token_for_test):
     await setup_db_with_info_cart()
 
-    # TODO: have to insert item with id 1 before calling this
-    # async with AsyncClient(app=app, base_url="http://localhost:8000") as client:
     headers = {
         'Authorization': 'Bearer {}'.format(get_token_for_test),
     }
@@ -104,4 +94,3 @@ async def test_checkout_user_carts(client: AsyncClient, get_token_for_test):
         response = await client.post("/cartItem/checkout/")
     print(response.url)
     assert response.status_code == 200
-

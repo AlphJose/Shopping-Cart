@@ -2,13 +2,6 @@
 from fastapi import HTTPException, status
 
 
-def success_response(status_code: int):
-    return {
-        "status": status_code,
-        "transaction": "Successful"
-    }
-
-
 # Exceptions
 def token_exception():
     token_exception_response = HTTPException(

@@ -7,8 +7,6 @@ from app.core.database import get_db_session
 from app.crud.crud_item import create_item
 from app.main import app
 from app.models import item_info
-from app.services.item_service import create_new_item
-from app.tests.conftest import DB_NAME
 
 
 async def setup_db_with_info():
@@ -32,8 +30,6 @@ async def test_get_items_list(client: AsyncClient):
         "/item/",
     )
     assert response.status_code == status.HTTP_200_OK
-    # assert json in response.json()
-    print(response.json()[0]['Items'])
     assert response.json()[0]['Items']['item_name'] == json['item_name']
     assert response.json()[0]['Items']['price'] == json['price']
     await db_utils.remove_database()
@@ -49,11 +45,6 @@ async def test_create_new_item(client: AsyncClient, get_token_for_test_admin):
     }
     await setup_db_with_info()
 
-    # TODO: authorized as admin required
-    # value = f'Bearer {get_token_for_test_admin}'
-    # headers = {
-    #     'Authorization': value
-    # }
     headers = {
         'Authorization': 'Bearer {}'.format(get_token_for_test_admin),
     }

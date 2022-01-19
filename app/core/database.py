@@ -46,7 +46,6 @@ async def get_db_session() -> AsyncSession:
 
 
 async def get_db_engine():
-    # DB name is constructed from the prefix and the client-name.
     sqlite_client_str = "sqlite+aiosqlite:///./shoppingcartapp"
     print(sqlite_client_str)
     test_db_engine = create_async_engine(sqlite_client_str, echo=True)

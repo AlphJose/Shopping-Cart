@@ -41,10 +41,7 @@ async def create_database():
 
     try:
         test_engine = get_db_engine()
-        # create the database
-        # test_engine.execute("CREATE DATABASE `%s`;" % db_name)
-        # create tables in the database
-        # test_engine.execute("USE `%s`;" % db_name)
+
         # Base.metadata.create_all(test_engine, checkfirst=False)
         async with test_engine.begin() as conn:
             await conn.run_sync(Base.metadata.drop_all)
@@ -60,8 +57,6 @@ async def remove_database():
 
     try:
         test_engine = get_db_engine()
-        # remove the database
-        # test_engine.execute(f"DROP DATABASE `{db_name}`;")
         async with test_engine.begin() as conn:
             await conn.run_sync(Base.metadata.drop_all)
     except DBAPIError as exc:

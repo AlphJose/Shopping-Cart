@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.status import HTTP_200_OK
 
-from app.api.responses import success_response, http_exception
+from app.api.responses import http_exception
 from app.core.db_utils import get_db
 from app.crud.crud_cart import show_cart_items, create_cart, remove_cart_item, remove_cart_of_owner
 from app.crud.crud_item import get_item_by_item_id

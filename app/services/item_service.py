@@ -49,8 +49,6 @@ async def create_new_item(item_data: CreateItem,
 # get list of items for user
 @router.get("/")
 async def get_items_list(db: AsyncSession = Depends(get_db)):
-    print("entered get_items_list")
     items_list = await get_items(db)
-    print("done: get_items_list")
 
     return items_list
